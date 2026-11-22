@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#203b35">
+  <title>Arthur’s Little World · A place of his own</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <main>
+    <header class="masthead">
+      <div class="identity"><div class="brand-mark" aria-hidden="true"><i></i><i></i></div><div><p class="eyebrow">A LITTLE LIFE, UNFOLDING</p><h1>Arthur’s Little World<span>1.8</span></h1></div></div>
+      <div class="live-info"><span id="status" class="status">Connecting…</span><span id="viewers" class="muted"></span></div>
+    </header>
+    <div class="layout">
+      <section class="world-column" aria-label="Arthur’s world">
+        <div class="world-shell">
+          <div class="scene-top"><div><span class="live-dot"></span><strong id="place">The meadowlands</strong><span id="clock">Waiting for Arthur</span></div><button id="mapToggle" class="glass-button" aria-controls="mapDialog">Explore map <span aria-hidden="true">↗</span></button></div>
+          <canvas id="world" width="960" height="600" role="img" aria-label="Live view of Arthur and his world. His current activity is shown below."></canvas>
+          <div id="connection" class="connection"><strong id="connectionTitle">Opening Arthur’s world…</strong><p id="connectionHelp">Connecting to the world server.</p><button id="retry" hidden>Try again</button></div>
+          <div class="scene-bottom"><div class="scene-caption"><span id="motionLabel">A world with a life of its own</span><small id="fps">30 FPS target</small></div><div class="view-controls"><button id="zoomOut" aria-label="Zoom out">−</button><button id="follow" aria-label="Center the view on Arthur">Follow Arthur</button><button id="zoomIn" aria-label="Zoom in">+</button></div></div>
+        </div>
+        <p class="world-note"><span id="modeNote">Arthur’s adventures continue while his world is running.</span><span id="aiNote">Connecting</span></p>
+
+        <details id="ownerAccess" class="owner-access" hidden>
+          <summary><span id="ownerAccessTitle">Owner access</span><span class="muted">Private conversations & controls</span></summary>
+          <p id="ownerAccessHelp" class="help">If this is your world, enter the owner token shown on the computer running Arthur. Viewers can watch without one.</p>
+          <form id="ownerAccessForm" class="owner-form"><label for="ownerToken" class="sr-only">Owner access token</label><input id="ownerToken" type="password" autocomplete="off" spellcheck="false" placeholder="Owner token"><button id="ownerUnlock" type="submit">Unlock</button><button id="ownerLock" type="button" class="secondary-button" hidden>Lock controls</button></form>
+          <p id="ownerAccessError" class="inline-error" role="status"></p>
+        </details>
+
+        <section class="card chat-card conversation-card" aria-labelledby="chatTitle">
+          <div class="section-head"><div><p class="eyebrow">KEEP HIM COMPANY</p><h2 id="chatTitle">Talk with Arthur</h2></div><span id="chatMode" class="quiet-tag">Connecting</span></div>
+          <p id="chatIntro" class="conversation-intro">Share an idea, ask about his day, or help him dream up a home.</p>
+          <div id="chatLog" class="chat-log" role="log" aria-live="polite" aria-relevant="additions text"><p class="empty">Your conversations will appear here.</p></div>
+          <div id="chatActivity" class="chat-activity" role="status" aria-live="polite" hidden><span class="thinking-dots" aria-hidden="true"><i></i><i></i><i></i></span><span id="chatActivityText">Arthur is replying…</span></div>
+          <div id="chatErrorBox" class="message-error" hidden><p id="chatError" role="status"></p><button id="chatRetry" type="button" class="secondary-button">Retry this message</button></div>
+          <form id="chatForm"><label for="chatInput" class="sr-only">Message Arthur</label><div class="chat-compose"><textarea id="chatInput" rows="2" maxlength="2000" placeholder="Arthur, what kind of home would you like to build?" disabled></textarea><button type="submit" id="chatSend" disabled>Send <span aria-hidden="true">↗</span></button></div></form>
+          <div id="chatPrompts" class="chat-prompts" aria-label="Conversation ideas"><button type="button" data-prompt="What have you enjoyed about today?">How was your day?</button><button type="button" data-prompt="Tell me about the home you want to build.">Your dream home</button><button type="button" data-prompt="What have you learned about yourself?">What have you learned?</button></div>
+          <small id="chatNote" class="help">Conversations are private to the owner of this world.</small>
+          <details id="aiSetup" class="setup-help" hidden><summary id="aiSetupTitle">Connect AI conversation</summary><p id="aiSetupMessage" class="help"></p><p id="aiSetupInstructions" class="help">On the computer running Arthur, run <code>python3 setup_ai.py</code>, then restart the world. The setup tool keeps your API key on that computer.</p></details>
+        </section>
+
+        <section class="card travel-card"><div class="section-head"><div><p class="eyebrow">A LITTLE NUDGE</p><h2>Where shall we go?</h2></div><div class="travel-actions"><span class="quiet-tag" id="accessLabel">Connecting</span><button id="arthurPause" type="button" class="secondary-button" aria-pressed="false" disabled>Pause Arthur</button></div></div><div id="destinations" class="destinations"></div><p id="destinationHelp" class="help">Suggest a destination and Arthur will find a way there.</p><p id="error" role="status" aria-live="polite"></p></section>
+
+        <div class="lower-grid building-grid">
+          <section class="card house-card" aria-labelledby="houseTitle">
+            <div class="section-head"><div><p class="eyebrow">A PLACE OF HIS OWN</p><h2 id="houseTitle">Arthur’s house</h2></div><span id="houseStatus" class="quiet-tag">A little idea</span></div>
+            <p id="houseStory" class="house-story">A home built gradually, from the materials Arthur gathers and the places that inspire him.</p>
+            <ol id="houseSteps" class="house-steps" aria-label="Construction stages"></ol>
+            <div class="project-progress"><div class="progress-label"><strong id="housePhase">Planning his home</strong><span id="housePercent">0%</span></div><div id="houseProgress" class="progress-track" role="progressbar" aria-label="House construction" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="houseProgressBar"></i></div></div>
+            <p id="houseTask" class="help">Arthur will gather supplies, bring them to the plot, and work on one stage at a time.</p>
+            <div id="houseMaterials" class="house-materials"></div>
+            <p id="houseMaterialsNote" class="help"></p>
+            <div class="house-style"><label for="houseStyle">House style</label><select id="houseStyle" disabled><option value="woodland">Woodland home</option><option value="stone_cottage">Stone cottage</option><option value="meadow_cottage">Meadow cottage</option></select><small id="houseStyleHelp" class="help">A look that feels like Arthur.</small></div>
+            <div id="houseControls" class="house-controls"><button id="houseStart" type="button" disabled>Begin building</button><button id="housePause" type="button" class="secondary-button" hidden>Pause project</button><button id="houseResume" type="button" hidden>Continue building</button><button id="houseDeposit" type="button" class="secondary-button" disabled>Store materials</button><button id="houseVisit" type="button" class="text-button" disabled>Visit the plot ↗</button></div>
+            <p id="houseHint" class="help"></p><p id="houseError" class="inline-error" role="status"></p>
+          </section>
+          <section class="card market-card"><div class="section-head"><div><p class="eyebrow">ALDER VILLAGE</p><h2>The market</h2></div><span id="wallet" class="quiet-tag">— coins</span></div><div id="shop" class="shop"></div><p id="shopHelp" class="help">Arthur needs to be at the market to buy resources.</p><div class="backpack"><span class="eyebrow">IN HIS BACKPACK</span><p id="inventory">—</p></div></section>
+        </div>
+        <section class="card"><div class="section-head"><div><p class="eyebrow">SMALL MOMENTS</p><h2>Arthur’s journal</h2></div><span class="quiet-tag">Saved by the world</span></div><div id="journal" class="journal"><p class="empty">Waiting for his latest adventures…</p></div></section>
+      </section>
+      <aside class="side-column" aria-label="Arthur’s character and companions">
+        <section class="card arthur-card"><div class="section-head"><div><p class="eyebrow">MEET YOUR EXPLORER</p><h2>Arthur</h2></div><span id="moodTag" class="quiet-tag">Curious by nature</span></div><p id="thought" class="thought">“I wonder what’s beyond the next bend.”</p><div id="stats" class="stats"></div><div class="intention"><span class="eyebrow">RIGHT NOW</span><p id="goal">Waking up…</p></div><div class="intention"><span class="eyebrow">HIS NEXT LITTLE ADVENTURE</span><p id="project">—</p></div></section>
+        <section class="card mind-card" aria-labelledby="mindTitle"><div class="section-head"><div><p class="eyebrow">GETTING TO KNOW ARTHUR</p><h2 id="mindTitle">His own outlook</h2></div><span id="mindMode" class="quiet-tag">Growing with experience</span></div><p id="mindSummary" class="help">His personality, memories, and plans stay with him from one visit to the next.</p><div id="mindContent"><div id="mindValues" class="value-tags"></div><h3>Things he likes</h3><div id="mindLikes" class="preference-list"></div><h3>Things he avoids</h3><div id="mindDislikes" class="preference-list"></div><h3>What he’s working toward</h3><div id="mindGoals" class="mind-list"></div><h3>Little inspirations</h3><div id="mindInspirations" class="mind-list"></div><h3>Recent reflections</h3><div id="mindThoughts" class="mind-thoughts"></div></div></section>
+        <section class="card"><div class="section-head"><div><p class="eyebrow">FRIENDS ALONG THE WAY</p><h2>The sanctuary</h2></div><span id="collectionCount" class="quiet-tag">0 friends</span></div><p id="sanctuary" class="help">A quiet place for Arthur’s companions.</p><div id="collection" class="collection"></div></section>
+        <details class="card details-card"><summary>Field guide <span aria-hidden="true">＋</span></summary><p class="help">The creatures Arthur has encountered.</p><div id="encyclopedia" class="collection"></div></details>
+        <details id="memoryDetails" class="card details-card"><summary>Memories & personality <span aria-hidden="true">＋</span></summary><h3>Favorite places</h3><p id="preferences">—</p><h3>Personality</h3><p id="traits">—</p><h3>Latest reflection</h3><p id="reflection">—</p><h3>Important memories</h3><div id="memories"></div><h3>Discoveries</h3><p id="discoveries">—</p><h3>Things he has built</h3><p id="structures">—</p></details>
+      </aside>
+    </div>
+    <footer>Every step, a little story.<span>A persistent simulated character, shaped by his adventures.</span></footer>
+  </main>
+  <dialog id="mapDialog" aria-labelledby="mapTitle"><div class="map-heading"><div><p class="eyebrow">THE MEADOWLANDS</p><h2 id="mapTitle">A whole world to wander</h2></div><button id="mapClose" aria-label="Close world map">✕</button></div><canvas id="fullmap" width="880" height="680" role="img" aria-label="Map of the woods, ridge, lake, village, sanctuary, and Arthur’s house plot. A gold marker shows Arthur."></canvas><div class="map-legend"><span><i class="arthur-dot"></i>Arthur</span><span>Woods · Lake · Village · House plot</span></div><p class="help">Choose a destination below the live view to suggest a journey.</p></dialog>
+  <noscript><p class="noscript">This world needs JavaScript enabled and the included Python server running.</p></noscript>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>
